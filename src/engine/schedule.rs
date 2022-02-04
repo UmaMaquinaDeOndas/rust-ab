@@ -280,6 +280,14 @@ cfg_if! {
 
                 state.before_step(self);
 
+                self.during_step(state);
+
+                state.after_step(self);
+                self.step += 1;
+                state.update(self.step);
+            }
+
+            pub fn during_step(&mut self, state: &mut dyn State) {
                 let events = &mut self.events;
 
                 if events.is_empty() {
@@ -330,10 +338,8 @@ cfg_if! {
                     }
                 }
 
-                state.after_step(self);
-                self.step += 1;
-                state.update(self.step);
             }
+
         }
     }
 }
